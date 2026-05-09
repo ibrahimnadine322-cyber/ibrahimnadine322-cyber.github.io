@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nadine Ibrahim — Portfolio BTS SIO</title>
+  <meta name="description" content="Portfolio de Nadine Ibrahim, étudiante en BTS SIO option SISR.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+/* ══ RESET ══ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --accent:#10B981;--accent2:#34D399;--accent3:#059669;
+  --bg:#080c0f;--bg2:#0d1117;--bg3:#111820;
+  --surface:rgba(255,255,255,.04);--surface2:rgba(255,255,255,.07);
+  --border:rgba(255,255,255,.08);--border2:rgba(16,185,129,.25);
+  --text:#e8edf2;--text2:#9baab8;--text3:#5a6a7a;
+  --sidebar-w:280px;
+  --grad:linear-gradient(135deg,#10B981,#34D399);
+  --c1:#10B981;--c2:#3B82F6;--c3:#8B5CF6;--c4:#F59E0B;--c5:#EF4444;--c6:#EC4899;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+
+/* ══ PLEXUS ══ */
+#plexus-canvas{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+/* ══ LOADER ══ */
+#loader{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1.2rem;transition:opacity .5s}
+.loader-logo{width:64px;height:64px;border-radius:18px;background:linear-gradient(135deg,#0d1f18,#10B981);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;color:#fff;box-shadow:0 0 40px rgba(16,185,129,.4)}
+.loader-name{font-family:'Syne',sans-serif;font-weight:600;font-size:1rem;color:var(--text2)}
+.loader-bar-wrap{width:200px;height:3px;background:var(--surface2);border-radius:2px;overflow:hidden}
+.loader-bar{height:100%;width:0;background:var(--grad);border-radius:2px;transition:width .25s ease}
+.loader-status{font-size:.75rem;color:var(--text3);letter-spacing:.05em}
+
+/* ══ LIGHTBOX ══ */
+#lightbox{position:fixed;inset:0;z-index:8000;background:rgba(0,0,0,.9);display:none;align-items:center;justify-content:center;flex-direction:column;gap:1rem}
+#lightbox.open{display:flex}
+#lightbox-close{position:absolute;top:1.5rem;right:1.5rem;background:var(--surface2);border:1px solid var(--border);color:var(--text);width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:1.1rem}
+#lightbox-img{max-width:90vw;max-height:80vh;border-radius:12px;object-fit:contain}
+#lightbox-caption{color:var(--text2);font-size:.85rem}
+
+/* ══ LAYOUT ══ */
+.app-layout{display:flex;min-height:100vh;position:relative;z-index:1}
+
+/* ── SIDEBAR ── */
+.sidebar{width:var(--sidebar-w);min-height:100vh;position:fixed;top:0;left:0;background:rgba(8,12,15,.92);backdrop-filter:blur(20px);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:100;transition:transform .3s ease}
+.sidebar-header{padding:2rem 1.5rem 1.5rem;border-bottom:1px solid var(--border)}
+.sidebar-logo{display:flex;align-items:center;gap:.9rem;margin-bottom:1rem}
+.logo-badge{width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,#0d1f18,#10B981);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:#fff;box-shadow:0 0 20px rgba(16,185,129,.35);flex-shrink:0}
+.logo-info .logo-name{display:block;font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;color:var(--text);line-height:1.2}
+.logo-info .logo-role{display:block;font-size:.72rem;color:var(--accent);font-weight:500;letter-spacing:.04em;margin-top:.15rem}
+.sidebar-status{display:flex;align-items:center;gap:.5rem;padding:.45rem .8rem;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);border-radius:20px;width:fit-content}
+.status-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 6px var(--accent);animation:pulse-dot 2s infinite}
+@keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.4}}
+.status-txt{font-size:.7rem;color:var(--accent);font-weight:500}
+.sidebar-nav{flex:1;padding:1.5rem 1rem;overflow-y:auto}
+.nav-section-label{font-size:.65rem;color:var(--text3);font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:0 .5rem;margin-bottom:.6rem}
+.nav-link{display:flex;align-items:center;gap:.75rem;padding:.6rem .75rem;border-radius:10px;color:var(--text2);text-decoration:none;font-size:.875rem;font-weight:400;transition:all .2s;position:relative;margin-bottom:.15rem}
+.nav-link .nav-icon{width:18px;height:18px;opacity:.6;flex-shrink:0;transition:opacity .2s}
+.nav-link:hover,.nav-link.active{color:var(--text);background:var(--surface2)}
+.nav-link.active{color:var(--accent);background:rgba(16,185,129,.1)}
+.nav-link.active .nav-icon{opacity:1}
+.nav-link.active::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:3px;height:60%;background:var(--accent);border-radius:0 2px 2px 0}
+.sidebar-footer{padding:1rem 1.5rem;border-top:1px solid var(--border)}
+.sidebar-contact-links{display:flex;gap:.5rem}
+.sc-link{width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:center;color:var(--text2);text-decoration:none;transition:all .2s}
+.sc-link:hover{border-color:var(--border2);color:var(--accent);background:rgba(16,185,129,.08)}
+.sc-link svg{width:15px;height:15px}
+
+/* ══ MAIN ══ */
+.main-content{margin-left:var(--sidebar-w);flex:1;min-height:100vh}
+
+/* ══ SECTIONS ══ */
+.section{padding:6rem 5rem;position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center}
+.section:not(:last-child){border-bottom:1px solid var(--border)}
+.section-label{font-size:.68rem;color:var(--accent);font-weight:600;letter-spacing:.18em;text-transform:uppercase;margin-bottom:.6rem;display:flex;align-items:center;gap:.5rem}
+.section-label::before{content:'';width:16px;height:1.5px;background:var(--accent);border-radius:1px}
+.section-title{font-family:'Syne',sans-serif;font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;color:var(--text);line-height:1.15;margin-bottom:.75rem}
+.section-bar{width:32px;height:2px;background:var(--grad);border-radius:2px;margin-bottom:2.5rem}
+.section-sub{color:var(--text2);font-size:.95rem;line-height:1.8;max-width:560px;margin-bottom:3rem}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
+.delay-2{transition-delay:.1s}
+.delay-3{transition-delay:.2s}
+
+/* GLASS */
+.glass{background:var(--surface);border:1px solid var(--border);border-radius:16px;backdrop-filter:blur(12px)}
+.card{padding:1.5rem}
+
+/* CHIPS */
+.chip-row{display:flex;flex-wrap:wrap;gap:.5rem}
+.chip{background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:.3rem .75rem;font-size:.75rem;color:var(--text2)}
+
+/* BTN */
+.btn-primary{display:inline-flex;align-items:center;gap:.5rem;padding:.8rem 1.8rem;background:var(--grad);color:#fff;border-radius:10px;font-weight:600;font-size:.9rem;text-decoration:none;border:none;cursor:pointer;transition:opacity .2s,transform .2s;font-family:inherit}
+.btn-primary:hover{opacity:.9;transform:translateY(-1px)}
+.btn-outline{display:inline-flex;align-items:center;gap:.5rem;padding:.8rem 1.8rem;background:transparent;color:var(--text);border:1px solid var(--border);border-radius:10px;font-weight:500;font-size:.9rem;text-decoration:none;cursor:pointer;transition:all .2s;font-family:inherit}
+.btn-outline:hover{border-color:var(--border2);color:var(--accent);background:rgba(16,185,129,.06)}
+
+/* ══ HERO ══ */
+#hero{min-height:100vh;display:flex;flex-direction:row;align-items:center;gap:5rem;padding:4rem 5rem}
+.hero-img-col{display:flex;justify-content:center;align-items:center;flex-shrink:0}
+.hero-info-col{flex:1;display:flex;flex-direction:column;justify-content:center}
+.hero-photo-wrap{position:relative;width:260px}
+.hero-photo-frame{width:240px;height:300px;border-radius:24px;overflow:hidden;border:1.5px solid var(--border2);background:linear-gradient(135deg,#0d1f18,#0d1117);position:relative;margin:0 auto}
+.hero-photo-frame img{width:100%;height:100%;object-fit:cover;object-position:top center}
+.hero-photo-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem}
+.hero-photo-initials{width:90px;height:90px;border-radius:50%;background:linear-gradient(135deg,#0d1f18,#10B981);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:#fff}
+.hero-photo-hint{font-size:.75rem;color:var(--text3);text-align:center;padding:0 1rem}
+.hero-photo-hint code{background:var(--surface2);padding:.1rem .3rem;border-radius:4px;font-size:.7rem}
+.hero-photo-deco{position:absolute;top:-12px;right:-12px;width:64px;height:64px;border-radius:50%;background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.18);z-index:-1}
+.hero-photo-deco2{position:absolute;bottom:-16px;left:-16px;width:80px;height:80px;border-radius:50%;background:rgba(16,185,129,.04);border:1px dashed rgba(16,185,129,.12);z-index:-1}
+.hero-school-badge{display:flex;align-items:center;gap:.55rem;padding:.5rem .9rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;font-size:.72rem;color:var(--text2);margin-top:1rem}
+.hero-school-badge svg{color:var(--accent)}
+.hero-school-badge strong{color:var(--text)}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:.5rem;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);border-radius:20px;padding:.3rem .85rem;font-size:.68rem;color:var(--accent);font-weight:600;letter-spacing:.07em;text-transform:uppercase;margin-bottom:1.1rem}
+.hero-eyebrow-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);animation:pulse-dot 2s infinite}
+.hero-name{font-family:'Syne',sans-serif;font-size:clamp(2rem,3.5vw,3rem);font-weight:800;line-height:1.1;color:var(--text);margin-bottom:.85rem;white-space:nowrap}
+.hero-name .accent-word{color:var(--accent)}
+.hero-tagline{font-size:1.35rem;color:var(--text2);line-height:1.6;margin-bottom:1rem;font-weight:400}
+.hero-location{display:flex;align-items:center;gap:.45rem;color:var(--text3);font-size:.88rem;margin-bottom:2rem}
+.hero-location svg{color:var(--accent)}
+.hero-btns{display:flex;gap:.85rem;flex-wrap:wrap;margin-bottom:2.2rem}
+.hero-stats{display:flex;gap:2rem;padding-top:1.8rem;border-top:1px solid var(--border)}
+.hstat-num{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:700;color:var(--text);line-height:1}
+.hstat-lbl{font-size:.7rem;color:var(--text3);margin-top:.25rem}
+
+/* ══ À PROPOS ══ */
+.apropos-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.par-label{font-size:.66rem;color:var(--accent);font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.75rem}
+.text-lead{font-size:.95rem;color:var(--text);line-height:1.75;margin-bottom:.65rem;font-weight:500}
+.text-body{font-size:.875rem;color:var(--text2);line-height:1.8}
+.mini-tl{display:flex;flex-direction:column;gap:.5rem}
+.tl-item{display:flex;gap:.75rem}
+.tl-dot{width:10px;height:10px;border-radius:50%;background:var(--surface2);border:2px solid var(--border);flex-shrink:0;margin-top:4px}
+.tl-item.current .tl-dot{background:var(--accent);border-color:var(--accent);box-shadow:0 0 10px rgba(16,185,129,.4)}
+.tl-connector{width:1px;flex:1;background:var(--border);margin:4px 0}
+.tl-box{padding:1rem;border-radius:12px;flex:1}
+.tl-period{font-size:.72rem;color:var(--text3);margin-bottom:.3rem;font-weight:500}
+.tl-period.rose{color:var(--accent)}
+.tl-school{font-size:.8rem;color:var(--text2);margin-bottom:.2rem}
+.tl-title{font-size:.9rem;font-weight:600;color:var(--text);margin-bottom:.3rem}
+.tl-desc{font-size:.78rem;color:var(--text3);line-height:1.5}
+
+/* ══ BTS SIO ══ */
+.bts-options{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem}
+.opt-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem}
+.opt-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem}
+.badge-rose{background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.3);color:var(--accent);border-radius:20px;padding:.2rem .7rem;font-size:.7rem;font-weight:600}
+.badge-grey{background:var(--surface2);border:1px solid var(--border);color:var(--text3);border-radius:20px;padding:.2rem .7rem;font-size:.7rem}
+.opt-sub{font-size:.8rem;color:var(--accent);margin-bottom:.75rem;font-weight:500}
+.deb-btn{display:inline-flex;align-items:center;gap:.4rem;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:.45rem .9rem;font-size:.8rem;color:var(--text2);cursor:pointer;margin-top:.75rem;transition:all .2s;font-family:inherit}
+.deb-btn:hover{border-color:var(--border2);color:var(--accent)}
+.deb-panel{display:none;margin-top:.75rem}
+.deb-panel.open{display:block}
+.deb-grid{display:flex;flex-direction:column;gap:.4rem}
+.deb-item{padding:.5rem .75rem;background:rgba(16,185,129,.05);border-left:2px solid var(--accent);border-radius:0 6px 6px 0;font-size:.82rem;color:var(--text2)}
+
+/* ══ PROJETS ══ */
+.slider-wrap{position:relative}
+.slide{display:none}
+.slide.active{display:grid;grid-template-columns:1.1fr 1fr;gap:2rem}
+.slide-img{border-radius:16px;overflow:hidden;border:1px solid var(--border);cursor:zoom-in;position:relative;background:var(--bg3);aspect-ratio:16/10}
+.slide-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.slide-img:hover img{transform:scale(1.03)}
+.slide-img-open{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.5);color:#fff;font-size:.85rem;opacity:0;transition:opacity .2s}
+.slide-img:hover .slide-img-open{opacity:1}
+.slide-info{display:flex;flex-direction:column;gap:.75rem}
+.proj-num{font-size:.7rem;color:var(--text3);font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+.proj-stage-badge{display:inline-block;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.25);color:#60a5fa;border-radius:6px;padding:.25rem .6rem;font-size:.75rem}
+.slide-title{font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:700;color:var(--text);line-height:1.35}
+.proj-objectif{font-size:.82rem;color:var(--text2);line-height:1.65}
+.proj-obj-label{font-weight:600;color:var(--accent);margin-right:.3rem}
+.proj-steps{display:flex;flex-direction:column;gap:.5rem}
+.proj-step{display:flex;gap:.6rem;align-items:flex-start;font-size:.82rem;color:var(--text2);line-height:1.5}
+.step-num{width:20px;height:20px;border-radius:50%;background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.3);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;flex-shrink:0}
+.proj-resultat{font-size:.82rem;color:var(--accent);background:rgba(16,185,129,.07);border-left:2px solid var(--accent);padding:.5rem .75rem;border-radius:0 8px 8px 0}
+.proj-dl-row{display:flex;gap:.6rem;flex-wrap:wrap}
+.proj-dl-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.45rem .85rem;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text2);font-size:.78rem;text-decoration:none;cursor:pointer;transition:all .2s;font-family:inherit}
+.proj-dl-btn:hover{border-color:var(--border2);color:var(--accent);background:rgba(16,185,129,.06)}
+.slider-nav{display:flex;align-items:center;justify-content:center;gap:1rem;margin-top:2rem}
+.slider-btn{width:40px;height:40px;border-radius:50%;border:1px solid var(--border);background:var(--surface);color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.slider-btn:hover{border-color:var(--border2);color:var(--accent)}
+.slider-btn svg{width:18px;height:18px}
+.dots{display:flex;gap:.4rem}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--border);border:none;cursor:pointer;transition:all .2s}
+.dot.active{background:var(--accent);width:20px;border-radius:3px}
+
+/* ══ COMPÉTENCES ══ */
+.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-bottom:2.5rem}
+.skill-cat-head{display:flex;align-items:center;gap:.6rem;margin-bottom:1rem}
+.skill-cat-icon{width:32px;height:32px}
+.skill-cat-icon svg{width:100%;height:100%;color:var(--accent)}
+.skill-cat-label{font-weight:700;font-size:.9rem}
+.skill-tags{display:flex;flex-wrap:wrap;gap:.4rem}
+.skill-tag{padding:.3rem .65rem;border-radius:6px;font-size:.75rem;background:var(--surface2);border:1px solid var(--border);color:var(--text2)}
+.skill-tag-main{background:rgba(16,185,129,.08);border-color:rgba(16,185,129,.2);color:var(--accent2)}
+.certs-row{display:flex;gap:1.2rem;flex-wrap:wrap}
+.cert-card{padding:1.2rem;border-radius:14px;min-width:220px;max-width:280px;display:flex;flex-direction:column;gap:.8rem}
+.cert-name{font-weight:600;font-size:.9rem}
+.cert-org{font-size:.78rem;color:var(--text3)}
+.cert-badge{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.25);color:var(--accent);padding:.2rem .6rem;border-radius:10px;font-size:.7rem;font-weight:600}
+.cert-footer-row{display:flex;align-items:center;gap:.5rem;margin-top:.2rem}
+
+/* ══ DOCUMENTS ══ */
+.docs-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.doc-card{padding:1.2rem;border-radius:14px;display:flex;flex-direction:column;gap:1rem}
+.doc-header{display:flex;align-items:flex-start;gap:.8rem}
+.doc-badge{width:40px;height:40px;border-radius:10px;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.25);color:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;flex-shrink:0}
+.doc-title{font-weight:600;font-size:.9rem;color:var(--text)}
+.doc-sub{font-size:.75rem;color:var(--text3);margin-top:.2rem;line-height:1.4}
+.doc-frame{height:220px;background:var(--bg3);border-radius:10px;border:1px solid var(--border);overflow:hidden}
+.doc-frame iframe,.doc-frame object{width:100%;height:100%;border:none}
+.doc-footer{display:flex;gap:.6rem}
+
+/* ══ VEILLE ══ */
+.veille-sources-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem}
+.vsource-cat-label{font-size:.72rem;color:var(--text3);font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.75rem;display:block}
+.vsource-card{padding:1rem;border-radius:12px;display:flex;flex-direction:column;gap:.6rem}
+.vsource-head{display:flex;align-items:center;gap:.6rem}
+.vsource-icon{width:30px;height:30px;border-radius:8px;background:var(--surface2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.vsource-name{font-size:.85rem;font-weight:600;color:var(--text)}
+.vsource-type{font-size:.7rem;color:var(--text3)}
+.vsource-desc{font-size:.78rem;color:var(--text2);line-height:1.5;flex:1}
+.vsource-link{font-size:.75rem;color:var(--accent);text-decoration:none;font-weight:500}
+.vsource-link:hover{text-decoration:underline}
+.thn-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;margin-top:2rem}
+.thn-source-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);border-radius:20px;padding:.4rem .9rem;font-size:.78rem;color:var(--text2);font-weight:500}
+.thn-live-dot{width:7px;height:7px;border-radius:50%;background:#ef4444;animation:pulse-dot 1.5s infinite}
+.thn-live-txt{color:#ef4444;font-size:.7rem;font-weight:600}
+.thn-refresh{display:flex;align-items:center;gap:.4rem;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:.4rem .8rem;font-size:.78rem;color:var(--text2);cursor:pointer;transition:all .2s;font-family:inherit}
+.thn-refresh:hover{border-color:var(--border2);color:var(--accent)}
+.thn-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.thn-card{padding:1rem;border-radius:12px;display:flex;flex-direction:column;gap:.5rem}
+.thn-card-title{font-size:.85rem;font-weight:600;color:var(--text);line-height:1.4;text-decoration:none;display:block}
+.thn-card-title:hover{color:var(--accent)}
+.thn-card-date{font-size:.72rem;color:var(--text3)}
+.thn-card-desc{font-size:.78rem;color:var(--text2);line-height:1.5}
+.thn-tag{display:inline-block;padding:.15rem .5rem;border-radius:4px;font-size:.68rem;font-weight:600}
+.thn-tag-red{background:rgba(239,68,68,.1);color:#f87171}
+.thn-tag-orange{background:rgba(249,115,22,.1);color:#fb923c}
+.thn-tag-yellow{background:rgba(234,179,8,.1);color:#facc15}
+.thn-tag-blue{background:rgba(59,130,246,.1);color:#60a5fa}
+.thn-tag-green{background:rgba(16,185,129,.1);color:#34d399}
+.thn-skeleton{min-height:120px;background:var(--surface);border:1px solid var(--border);border-radius:12px;animation:skeleton-pulse 1.5s infinite}
+@keyframes skeleton-pulse{0%,100%{opacity:.5}50%{opacity:1}}
+.thn-error{text-align:center;padding:2rem;color:var(--text3)}
+.thn-error button{background:none;border:none;color:var(--accent);cursor:pointer}
+
+/* ══ CONTACT ══ */
+.contact-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:2.5rem;align-items:start}
+.contact-tagline{font-family:'Syne',sans-serif;font-size:2rem;font-weight:700;line-height:1.25;margin-bottom:1.5rem}
+.contact-list{display:flex;flex-direction:column;gap:.75rem}
+.contact-item{display:flex;align-items:center;gap:.75rem;padding:1rem;border-radius:12px}
+.contact-ico{width:38px;height:38px;border-radius:10px;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.2);display:flex;align-items:center;justify-content:center;color:var(--accent);flex-shrink:0}
+.contact-label{font-size:.72rem;color:var(--text3);font-weight:500;text-transform:uppercase;letter-spacing:.05em}
+.contact-item a{color:var(--text);font-size:.875rem;text-decoration:none;transition:color .2s}
+.contact-item a:hover{color:var(--accent)}
+.contact-form-card{padding:1.8rem;border-radius:18px}
+.contact-form{display:flex;flex-direction:column;gap:1rem}
+.cf-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.cf-field{display:flex;flex-direction:column;gap:.4rem}
+.cf-label{font-size:.75rem;color:var(--text2);font-weight:500}
+.cf-input{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;color:var(--text);font-size:.875rem;font-family:inherit;outline:none;transition:border-color .2s;width:100%}
+.cf-input:focus{border-color:var(--border2)}
+.cf-textarea{resize:vertical;min-height:100px}
+.cf-error{font-size:.72rem;color:#f87171;min-height:1rem}
+.cf-submit{align-self:flex-start}
+.cf-success{display:none;text-align:center;padding:2rem}
+.cf-success.show{display:block}
+.cf-success-title{font-size:1.1rem;font-weight:700;margin-bottom:.5rem}
+.cf-success-msg{font-size:.85rem;color:var(--text2);margin-bottom:1rem}
+.cf-check-circle{stroke-dasharray:157;stroke-dashoffset:157;animation:check-circle .5s .1s ease forwards}
+.cf-check-tick{stroke-dasharray:40;stroke-dashoffset:40;animation:check-tick .35s .5s ease forwards}
+@keyframes check-circle{to{stroke-dashoffset:0}}
+@keyframes check-tick{to{stroke-dashoffset:0}}
+
+/* ══ SYNTHÈSE MODAL ══ */
+.synth-modal{display:none;position:fixed;inset:0;z-index:7000;background:rgba(0,0,0,.8);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:1.5rem}
+.synth-modal.open{display:flex}
+.synth-modal-inner{background:var(--bg2);border:1px solid var(--border);border-radius:18px;max-width:900px;width:100%;max-height:85vh;display:flex;flex-direction:column;overflow:hidden}
+.synth-modal-header{display:flex;align-items:flex-start;justify-content:space-between;padding:1.2rem 1.5rem;border-bottom:1px solid var(--border)}
+.synth-modal-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem}
+.synth-modal-sub{font-size:.78rem;color:var(--text3);margin-top:.2rem}
+.synth-close{background:var(--surface2);border:1px solid var(--border);border-radius:8px;width:32px;height:32px;color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center}
+.synth-legend{display:flex;flex-wrap:wrap;gap:.5rem;padding:.75rem 1.5rem;border-bottom:1px solid var(--border)}
+.synth-leg-item{display:flex;align-items:center;gap:.35rem;font-size:.7rem;color:var(--text2)}
+.synth-leg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.synth-scroll{overflow-y:auto;flex:1}
+.synth-table{width:100%;border-collapse:collapse;font-size:.78rem}
+.synth-table th{padding:.6rem .5rem;background:var(--surface2);color:var(--text2);font-weight:600;text-align:left;border-bottom:1px solid var(--border);position:sticky;top:0}
+.synth-th-real{width:40%;padding-left:1.5rem}
+.synth-th-period{width:18%}
+.synth-th-comp{width:7%;text-align:center}
+.synth-section-row td{padding:.5rem 1.5rem;background:var(--surface);color:var(--text2);font-weight:600;font-size:.75rem}
+.synth-row td{padding:.45rem .5rem;border-bottom:1px solid rgba(255,255,255,.03)}
+.synth-row td:first-child{padding-left:1.5rem}
+.synth-row:hover td{background:var(--surface)}
+.synth-row-highlight td{background:rgba(16,185,129,.05)!important}
+.synth-row-dim td{opacity:.35}
+.synth-check{font-size:.8rem;display:flex;align-items:center;justify-content:center}
+.synth-check.c1{color:var(--c1)}.synth-check.c2{color:var(--c2)}.synth-check.c3{color:var(--c3)}
+.synth-check.c4{color:var(--c4)}.synth-check.c5{color:var(--c5)}.synth-check.c6{color:var(--c6)}
+
+/* ══ FOOTER ══ */
+footer{padding:1.5rem 5rem;border-top:1px solid var(--border);color:var(--text3);font-size:.75rem;display:flex;align-items:center;justify-content:space-between}
+
+/* ══ SCROLL TOP ══ */
+#scrollTop{position:fixed;bottom:2rem;right:2rem;z-index:200;width:42px;height:42px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateY(10px);transition:all .3s}
+#scrollTop.show{opacity:1;transform:none}
+#scrollTop:hover{border-color:var(--border2);color:var(--accent)}
+
+/* ══ SCROLL PROGRESS ══ */
+#scroll-progress{position:fixed;top:0;left:var(--sidebar-w);right:0;height:2px;background:var(--grad);z-index:200;width:0;transition:width .1s}
+
+/* ══ BURGER ══ */
+.burger{display:none;position:fixed;top:1rem;left:1rem;z-index:300;width:42px;height:42px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:5px}
+.burger span{width:20px;height:2px;background:var(--text2);border-radius:1px;transition:all .3s;display:block}
+
+/* ══ CURSOR ══ */
+#cursor-outer{width:36px;height:36px;border:1.5px solid rgba(16,185,129,.5);border-radius:50%;position:fixed;pointer-events:none;transform:translate(-50%,-50%);z-index:9997}
+#cursor-inner{width:6px;height:6px;background:var(--accent);border-radius:50%;position:fixed;pointer-events:none;transform:translate(-50%,-50%);z-index:9998}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:1024px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:none}
+  .main-content{margin-left:0}
+  #scroll-progress{left:0}
+  .burger{display:flex}
+  .section{padding:4rem 2rem}
+  #hero{flex-direction:column;gap:2rem;padding:5rem 2rem 3rem;align-items:center}
+  .hero-info-col{align-items:center;text-align:center}
+  .hero-btns{justify-content:center}
+  .hero-location{justify-content:center}
+  .hero-eyebrow{align-self:center}
+  .apropos-grid,.bts-options,.skills-grid,.docs-grid,.contact-grid{grid-template-columns:1fr}
+  .slide.active{grid-template-columns:1fr}
+  .cf-row{grid-template-columns:1fr}
+  .thn-grid,.veille-sources-grid{grid-template-columns:1fr 1fr}
+  footer{padding:1.5rem 2rem}
+}
+@media(max-width:640px){
+  .thn-grid,.veille-sources-grid{grid-template-columns:1fr}
+  .hero-name{font-size:2.4rem}
+  .certs-row{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<canvas id="plexus-canvas"></canvas>
+
+<div id="loader">
+  <div class="loader-logo">NI</div>
+  <div class="loader-name">Nadine Ibrahim</div>
+  <div class="loader-bar-wrap"><div class="loader-bar" id="loaderBar"></div></div>
+  <div class="loader-status" id="loaderStatus">Initialisation…</div>
+</div>
+
+<div id="lightbox">
+  <button id="lightbox-close" aria-label="Fermer">✕</button>
+  <img id="lightbox-img" src="" alt="">
+  <p id="lightbox-caption"></p>
+</div>
+
+<div id="cursor-outer"></div>
+<div id="cursor-inner"></div>
+<div id="scroll-progress"></div>
+<button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+
+<div class="app-layout">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <div class="logo-badge">NI</div>
+        <div class="logo-info">
+          <span class="logo-name">Nadine Ibrahim</span>
+          <span class="logo-role">BTS SIO · SISR</span>
+        </div>
+      </div>
+      <div class="sidebar-status">
+        <div class="status-dot"></div>
+        <span class="status-txt">En recherche d'alternance</span>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Navigation</div>
+      <a href="#hero" class="nav-link active">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Accueil
+      </a>
+      <a href="#apropos" class="nav-link">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>À propos
+      </a>
+      <a href="#bts" class="nav-link">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>BTS SIO
+      </a>
+      <a href="#projets" class="nav-link">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>Projets
+      </a>
+      <a href="#competences" class="nav-link">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>Compétences
+      </a>
+      <a href="#documents" class="nav-link">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Documents
+      </a>
+      <a href="#veille" class="nav-link">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Veille
+      </a>
+      <a href="#contact" class="nav-link">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Contact
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <p style="font-size:.7rem;color:var(--text3)">© 2026 Nadine Ibrahim</p>
+    </div>
+  </aside>
+
+  <!-- ── MAIN ── -->
+  <main class="main-content">
+
+    <!-- ══ HERO ══ -->
+    <section id="hero">
+      <div class="hero-img-col">
+        <div class="hero-photo-wrap">
+          <div class="hero-photo-frame">
+            <img src="avatar.png" alt="Nadine Ibrahim">
+          </div>
+          <div class="hero-photo-deco"></div>
+          <div class="hero-photo-deco2"></div>
+          <div class="hero-school-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            <span><strong>IPSSI</strong> — Marne-la-Vallée · 2024–2026</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-info-col">
+        <div class="hero-eyebrow">
+          <div class="hero-eyebrow-dot"></div>
+          Étudiante en 2ème année BTS SIO — Option SISR
+        </div>
+        <h1 class="hero-name">Nadine <span class="accent-word">Ibrahim</span></h1>
+        <p class="hero-tagline">Passionnée par les infrastructures systèmes,<br>réseaux et la cybersécurité</p>
+        <div class="hero-location">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          IPSSI — Marne-la-Vallée · 2024–2026
+        </div>
+        <div class="hero-btns">
+          <a href="#projets" class="btn-primary">Découvrir →</a>
+          <a href="#contact" class="btn-outline">Me contacter</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ À PROPOS ══ -->
+    <section id="apropos" class="section">
+      <div class="section-label">Profil</div>
+      <h2 class="section-title reveal">À propos</h2>
+      <div class="section-bar reveal"></div>
+      <div class="apropos-grid">
+        <div class="reveal">
+          <div class="glass card">
+            <p class="par-label">Qui suis-je ?</p>
+            <p class="text-lead">Je m'appelle Nadine Ibrahim, en BTS SIO option SISR en apprentissage, passionnée par l'informatique et les nouvelles technologies.</p>
+            <p class="text-body">Au cours de ma formation, j'ai acquis des compétences en réseaux, en systèmes d'exploitation ainsi qu'en mise en place de services informatiques. Ce portfolio présente mes réalisations et projets effectués durant mon cursus.</p>
+            <div class="chip-row" style="margin-top:1rem">
+              <span class="chip">📍 Île-de-France</span>
+              <span class="chip">BTS SIO 2ème année</span>
+              <span class="chip">Cybersécurité</span>
+              <span class="chip">En recherche d'alternance</span>
+            </div>
+          </div>
+        </div>
+        <div class="reveal delay-2">
+          <div class="glass card">
+            <p class="par-label">Parcours</p>
+            <div class="mini-tl">
+              <div class="tl-item current">
+                <div style="display:flex;flex-direction:column;align-items:center;margin-right:.75rem">
+                  <div class="tl-dot"></div>
+                  <div class="tl-connector" style="height:60px"></div>
+                </div>
+                <div class="tl-box glass" style="margin-bottom:.75rem">
+                  <div class="tl-period rose">2024 — 2026</div>
+                  <div class="tl-school">IPSSI — Marne-la-Vallée</div>
+                  <div class="tl-title">BTS SIO — Option SISR</div>
+                  <div class="tl-desc">Administration réseau, cybersécurité, virtualisation.</div>
+                </div>
+              </div>
+              <div class="tl-item">
+                <div style="display:flex;flex-direction:column;align-items:center;margin-right:.75rem">
+                  <div class="tl-dot"></div>
+                </div>
+                <div class="tl-box glass">
+                  <div class="tl-period">2023 — 2024</div>
+                  <div class="tl-school">Lycée Van Dongen — Lagny-sur-Marne</div>
+                  <div class="tl-title">Baccalauréat STMG</div>
+                  <div class="tl-desc">Sciences et Technologies du Management et de la Gestion. Option Marketing.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ BTS SIO ══ -->
+    <section id="bts" class="section">
+      <div class="section-label">Formation</div>
+      <h2 class="section-title reveal">BTS SIO</h2>
+      <div class="section-bar reveal"></div>
+      <p class="section-sub reveal">Le BTS SIO est une formation de deux ans qui prépare aux métiers de l'informatique, couvrant le développement, les réseaux et la sécurité. Elle permet d'intégrer directement le marché du travail ou de poursuivre en licence professionnelle ou école d'ingénieurs.</p>
+      <div class="bts-options reveal">
+        <div class="glass card">
+          <div class="opt-head"><div class="opt-title">Option SISR</div><span class="badge-rose">Mon option</span></div>
+          <p class="opt-sub">Solutions d'Infrastructure, Systèmes et Réseaux</p>
+          <p class="text-body">L'option SISR forme des spécialistes en gestion et maintenance des infrastructures réseaux et systèmes informatiques. Les étudiants apprennent à installer, configurer et administrer des réseaux, à assurer la sécurité des systèmes d'information et à fournir un support technique aux utilisateurs.</p>
+          <button class="deb-btn" onclick="toggleDeboucles(this,'sisr')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>Débouchés
+          </button>
+          <div class="deb-panel" id="deb-sisr">
+            <div class="deb-grid">
+              <div class="deb-item">🖥️ Technicien support informatique</div>
+              <div class="deb-item">🌐 Administrateur systèmes et réseaux</div>
+              <div class="deb-item">🔧 Technicien de maintenance informatique</div>
+            </div>
+          </div>
+        </div>
+        <div class="glass card">
+          <div class="opt-head"><div class="opt-title">Option SLAM</div><span class="badge-grey">Autre option</span></div>
+          <p class="opt-sub">Solutions Logicielles et Applications Métier</p>
+          <p class="text-body">L'option SLAM forme des spécialistes en développement d'applications et de sites Web. Les étudiants y acquièrent des compétences en programmation, gestion de bases de données et conception d'applications Web.</p>
+          <button class="deb-btn" onclick="toggleDeboucles(this,'slam')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>Débouchés
+          </button>
+          <div class="deb-panel" id="deb-slam">
+            <div class="deb-grid">
+              <div class="deb-item">🌍 Développeur Web</div>
+              <div class="deb-item">💻 Développeur d'applications</div>
+              <div class="deb-item">🔍 Analyste d'applications ou d'études</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ PROJETS ══ -->
+    <section id="projets" class="section">
+      <div class="section-label">Réalisations</div>
+      <h2 class="section-title reveal">Projets</h2>
+      <div class="section-bar reveal"></div>
+      <p class="section-sub reveal">Réalisations concrètes effectuées en formation et en stage, couvrant l'administration réseau, la cybersécurité et la gestion des systèmes.</p>
+
+      <!-- Modale Synthèse -->
+      <div id="syntheseModal" class="synth-modal">
+        <div class="synth-modal-inner">
+          <div class="synth-modal-header">
+            <div>
+              <div class="synth-modal-title">Tableau de synthèse des réalisations professionnelles</div>
+              <div class="synth-modal-sub" id="synth-proj-label">BTS SIO SISR · Session 2026 · Nadine Ibrahim</div>
+            </div>
+            <button class="synth-close" onclick="closeSynthese()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+          </div>
+          <div class="synth-legend">
+            <div class="synth-leg-item"><span class="synth-leg-dot" style="background:var(--c1)"></span>C1 · Gérer le patrimoine</div>
+            <div class="synth-leg-item"><span class="synth-leg-dot" style="background:var(--c2)"></span>C2 · Répondre aux incidents</div>
+            <div class="synth-leg-item"><span class="synth-leg-dot" style="background:var(--c3)"></span>C3 · Présence en ligne</div>
+            <div class="synth-leg-item"><span class="synth-leg-dot" style="background:var(--c4)"></span>C4 · Mode projet</div>
+            <div class="synth-leg-item"><span class="synth-leg-dot" style="background:var(--c5)"></span>C5 · Mettre à disposition</div>
+            <div class="synth-leg-item"><span class="synth-leg-dot" style="background:var(--c6)"></span>C6 · Développement pro</div>
+          </div>
+          <div class="synth-scroll">
+            <table class="synth-table">
+              <thead><tr>
+                <th class="synth-th-real">Réalisation</th>
+                <th class="synth-th-period">Période</th>
+                <th class="synth-th-comp" style="background:color-mix(in srgb,var(--c1) 25%,transparent)">C1</th>
+                <th class="synth-th-comp" style="background:color-mix(in srgb,var(--c2) 25%,transparent)">C2</th>
+                <th class="synth-th-comp" style="background:color-mix(in srgb,var(--c3) 25%,transparent)">C3</th>
+                <th class="synth-th-comp" style="background:color-mix(in srgb,var(--c4) 25%,transparent)">C4</th>
+                <th class="synth-th-comp" style="background:color-mix(in srgb,var(--c5) 25%,transparent)">C5</th>
+                <th class="synth-th-comp" style="background:color-mix(in srgb,var(--c6) 25%,transparent)">C6</th>
+              </tr></thead>
+              <tbody>
+                <tr class="synth-section-row"><td colspan="8">📚 Réalisations en cours de formation</td></tr>
+                <tr class="synth-row" data-proj="4"><td>Installation et configuration d'un Windows Server 2022</td><td>21/10/2024 → 04/04/2026</td><td><span class="synth-check c1">✓</span></td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr class="synth-row" data-proj="4 5"><td>Installation et configuration des clients Windows et Linux</td><td>21/10/2024 → 04/04/2026</td><td><span class="synth-check c1">✓</span></td><td><span class="synth-check c2">✓</span></td><td></td><td></td><td></td><td></td></tr>
+                <tr class="synth-row" data-proj="5"><td>Installation et configuration d'un outil d'inventaire et ticketing (GLPI)</td><td>21/10/2024 → 04/04/2026</td><td></td><td><span class="synth-check c2">✓</span></td><td></td><td></td><td></td><td></td></tr>
+                <tr class="synth-row" data-proj="4"><td>Gestion des utilisateurs dans l'Active Directory</td><td>21/10/2024 → 04/04/2026</td><td><span class="synth-check c1">✓</span></td><td><span class="synth-check c2">✓</span></td><td></td><td></td><td></td><td><span class="synth-check c6">✓</span></td></tr>
+                <tr class="synth-row" data-proj="1"><td>Mise en place de VLAN</td><td>21/10/2024 → 04/04/2026</td><td><span class="synth-check c1">✓</span></td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr class="synth-row" data-proj="3"><td>Mise en place d'une infrastructure réseau</td><td>21/10/2024 → 04/04/2026</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr class="synth-row" data-proj="1"><td>Cas GSB : AP1 Proposition Commercial GSB</td><td>21/10/2024 → 04/04/2026</td><td></td><td><span class="synth-check c2">✓</span></td><td></td><td><span class="synth-check c4">✓</span></td><td><span class="synth-check c5">✓</span></td><td><span class="synth-check c6">✓</span></td></tr>
+                <tr class="synth-row" data-proj="1"><td>Cas GSB : AP2 Plan d'infrastructure réseau</td><td>21/10/2024 → 04/04/2026</td><td></td><td><span class="synth-check c2">✓</span></td><td></td><td><span class="synth-check c4">✓</span></td><td><span class="synth-check c5">✓</span></td><td></td></tr>
+                <tr class="synth-section-row"><td colspan="8">🏢 Stage 1ère année — SysDream (28/04/2025 → 25/06/2025)</td></tr>
+                <tr class="synth-row" data-proj="2"><td>Tests d'intrusion web et exploitation de vulnérabilités</td><td>28/04/2025 → 25/06/2025</td><td><span class="synth-check c1">✓</span></td><td></td><td></td><td><span class="synth-check c4">✓</span></td><td></td><td><span class="synth-check c6">✓</span></td></tr>
+                <tr class="synth-row" data-proj="2"><td>Formation et pratique en Cybersécurité</td><td>28/04/2025 → 25/06/2025</td><td></td><td><span class="synth-check c2">✓</span></td><td></td><td></td><td></td><td><span class="synth-check c6">✓</span></td></tr>
+                <tr class="synth-row" data-proj="2"><td>Exploitation de vulnérabilités web</td><td>28/04/2025 → 25/06/2025</td><td></td><td><span class="synth-check c2">✓</span></td><td></td><td><span class="synth-check c4">✓</span></td><td></td><td><span class="synth-check c6">✓</span></td></tr>
+                <tr class="synth-row" data-proj="2"><td>Apprentissage des méthodologies de tests d'intrusion</td><td>28/04/2025 → 25/06/2025</td><td></td><td></td><td></td><td><span class="synth-check c4">✓</span></td><td></td><td><span class="synth-check c6">✓</span></td></tr>
+                <tr class="synth-row" data-proj="2"><td>Mise en pratique sur plateformes d'apprentissage</td><td>28/04/2025 → 25/06/2025</td><td></td><td></td><td></td><td><span class="synth-check c4">✓</span></td><td></td><td><span class="synth-check c6">✓</span></td></tr>
+                <tr class="synth-row" data-proj="2"><td>Mise en service d'un poste de travail pour un collaborateur</td><td>28/04/2025 → 25/06/2025</td><td></td><td><span class="synth-check c2">✓</span></td><td></td><td><span class="synth-check c4">✓</span></td><td><span class="synth-check c5">✓</span></td><td></td></tr>
+                <tr class="synth-row" data-proj="2"><td>Veille technologique en cybersécurité</td><td>28/04/2025 → 25/06/2025</td><td></td><td></td><td></td><td></td><td></td><td><span class="synth-check c6">✓</span></td></tr>
+                <tr class="synth-section-row"><td colspan="8">🏢 Stage 2ème année — Petits Frères des Pauvres (06/09/2025 → 05/09/2026)</td></tr>
+                <tr class="synth-row" data-proj="4"><td>Gestion des sauvegardes de données utilisateurs</td><td>06/09/2025 → 05/09/2026</td><td><span class="synth-check c1">✓</span></td><td></td><td></td><td><span class="synth-check c4">✓</span></td><td><span class="synth-check c5">✓</span></td><td></td></tr>
+                <tr class="synth-row" data-proj="4"><td>Configuration et installation de postes Windows</td><td>06/09/2025 → 05/09/2026</td><td><span class="synth-check c1">✓</span></td><td></td><td></td><td></td><td><span class="synth-check c5">✓</span></td><td></td></tr>
+                <tr class="synth-row" data-proj="4"><td>Maintenance corrective des postes de travail</td><td>06/09/2025 → 05/09/2026</td><td><span class="synth-check c1">✓</span></td><td><span class="synth-check c2">✓</span></td><td></td><td></td><td><span class="synth-check c5">✓</span></td><td></td></tr>
+                <tr class="synth-row" data-proj="4"><td>Réinitialisation de mots de passe et déblocage de comptes</td><td>06/09/2025 → 05/09/2026</td><td><span class="synth-check c1">✓</span></td><td><span class="synth-check c2">✓</span></td><td></td><td></td><td></td><td></td></tr>
+                <tr class="synth-row" data-proj="4"><td>Configuration de téléphones IP</td><td>06/09/2025 → 05/09/2026</td><td></td><td><span class="synth-check c2">✓</span></td><td></td><td><span class="synth-check c4">✓</span></td><td><span class="synth-check c5">✓</span></td><td></td></tr>
+                <tr class="synth-row" data-proj="2"><td>Veille technologique</td><td>06/09/2025 → 05/09/2026</td><td></td><td></td><td></td><td></td><td></td><td><span class="synth-check c6">✓</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="slider-wrap reveal">
+        <!-- Projet 1 -->
+        <div class="slide active">
+          <div class="slide-img-wrap">
+            <div class="slide-img" onclick="openLightbox('schema.png','Infrastructure Réseau VLAN')">
+              <img src="schema.png" alt="Infrastructure réseau" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%22380%22%3E%3Crect fill=%22%230d1117%22 width=%22600%22 height=%22380%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22Arial%22 font-size=%2218%22 fill=%22%2310B981%22%3EInfrastructure%20R%C3%A9seau%20VLAN%3C/text%3E%3C/svg%3E'">
+              <div class="slide-img-open">🔍 Agrandir</div>
+            </div>
+          </div>
+          <div class="slide-info">
+            <div class="proj-num">Projet 01 / 05</div>
+            <h3 class="slide-title">Infrastructure Réseau VLAN</h3>
+            <div class="proj-objectif"><span class="proj-obj-label">Objectif :</span>Concevoir et déployer une infrastructure réseau segmentée par VLANs pour sécuriser les échanges entre départements d'une entreprise fictive.</div>
+            <div class="proj-steps">
+              <div class="proj-step"><div class="step-num">1</div>Analyse des besoins et conception du schéma réseau.</div>
+              <div class="proj-step"><div class="step-num">2</div>Configuration des VLANs sur switches Cisco dans Packet Tracer.</div>
+              <div class="proj-step"><div class="step-num">3</div>Mise en place du routage inter-VLAN et des ACLs.</div>
+              <div class="proj-step"><div class="step-num">4</div>Tests ping pour valider l'isolation entre VLANs.</div>
+            </div>
+            <div class="proj-resultat">✓ Infrastructure fonctionnelle — VLANs communiquent selon les règles définies</div>
+            <div class="chip-row"><span class="chip">Cisco Packet Tracer</span><span class="chip">VLANs</span><span class="chip">Routage</span><span class="chip">ACLs</span></div>
+            <div class="proj-dl-row">
+              <a href="Projet_VLAN_Nadine_Ibrahim.pdf" target="_blank" class="proj-dl-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Voir le rapport</a>
+              <a href="projetsisr.pkt" download class="proj-dl-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Fichier .pkt</a>
+              <button class="proj-dl-btn" onclick="openSynthese(1)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="9" x2="9" y2="21"/></svg>Compétences</button>
+            </div>
+          </div>
+        </div>
+        <!-- Projet 2 -->
+        <div class="slide">
+          <div class="slide-img-wrap">
+            <div class="slide-img" onclick="openLightbox('sysdream.png','Cybersécurité — SysDream')">
+              <img src="sysdream.png" alt="Stage SysDream" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%22380%22%3E%3Crect fill=%22%230d1117%22 width=%22600%22 height=%22380%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22Arial%22 font-size=%2218%22 fill=%22%2310B981%22%3EStage%20SysDream%3C/text%3E%3C/svg%3E'">
+              <div class="slide-img-open">🔍 Agrandir</div>
+            </div>
+          </div>
+          <div class="slide-info">
+            <div class="proj-num">Projet 02 / 05</div>
+            <div class="proj-stage-badge">🏢 Stage 1ère année — SysDream, Paris</div>
+            <h3 class="slide-title">Cybersécurité &amp; Tests d'intrusion</h3>
+            <div class="proj-objectif"><span class="proj-obj-label">Objectif :</span>Découvrir le métier de la cybersécurité et les outils utilisés lors d'un stage d'observation chez SysDream.</div>
+            <div class="proj-steps">
+              <div class="proj-step"><div class="step-num">1</div>Découverte des outils de cybersécurité de l'équipe.</div>
+              <div class="proj-step"><div class="step-num">2</div>Observation d'audits de sécurité en conditions réelles.</div>
+              <div class="proj-step"><div class="step-num">3</div>Initiation au scan de ports avec Nmap.</div>
+              <div class="proj-step"><div class="step-num">4</div>Rédaction d'un compte-rendu de stage.</div>
+            </div>
+            <div class="proj-resultat">✓ Découverte concrète du métier de pentesteur — première prise en main des outils</div>
+            <div class="chip-row"><span class="chip">Nessus</span><span class="chip">Nmap</span><span class="chip">Kali Linux</span><span class="chip">Pentest</span></div>
+            <div class="proj-dl-row">
+              <a href="Rapport_Stage_SysDream_Nadine_Ibrahim.pdf" target="_blank" class="proj-dl-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Voir le rapport</a>
+              <button class="proj-dl-btn" onclick="openSynthese(2)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="9" x2="9" y2="21"/></svg>Compétences</button>
+            </div>
+          </div>
+        </div>
+        <!-- Projet 3 -->
+        <div class="slide">
+          <div class="slide-img-wrap">
+            <div class="slide-img" onclick="openLightbox('intranet.png','Intranet HTTPS')">
+              <img src="intranet.png" alt="Intranet HTTPS" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%22380%22%3E%3Crect fill=%22%230d1117%22 width=%22600%22 height=%22380%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22Arial%22 font-size=%2218%22 fill=%22%2310B981%22%3EIntranet%20HTTPS%3C/text%3E%3C/svg%3E'">
+              <div class="slide-img-open">🔍 Agrandir</div>
+            </div>
+          </div>
+          <div class="slide-info">
+            <div class="proj-num">Projet 03 / 05</div>
+            <h3 class="slide-title">Intranet HTTPS avec certificat auto-signé</h3>
+            <div class="proj-objectif"><span class="proj-obj-label">Objectif :</span>Créer un serveur web intranet sur une VM Ubuntu, sécurisé en HTTPS avec un certificat auto-signé, accessible sur le réseau local.</div>
+            <div class="proj-steps">
+              <div class="proj-step"><div class="step-num">1</div>Création d'une VM Ubuntu Server sur VMware.</div>
+              <div class="proj-step"><div class="step-num">2</div>Installation et configuration de Nginx.</div>
+              <div class="proj-step"><div class="step-num">3</div>Génération d'un certificat SSL auto-signé avec OpenSSL.</div>
+              <div class="proj-step"><div class="step-num">4</div>Redirection HTTP vers HTTPS et validation.</div>
+            </div>
+            <div class="proj-resultat">✓ Intranet accessible en HTTPS — redirection HTTP automatique fonctionnelle</div>
+            <div class="chip-row"><span class="chip">Ubuntu Server</span><span class="chip">Nginx</span><span class="chip">OpenSSL</span><span class="chip">HTTPS</span><span class="chip">VMware</span></div>
+            <div class="proj-dl-row">
+              <a href="Projet3.pdf" target="_blank" class="proj-dl-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Voir le projet</a>
+              <button class="proj-dl-btn" onclick="openSynthese(3)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="9" x2="9" y2="21"/></svg>Compétences</button>
+            </div>
+          </div>
+        </div>
+        <!-- Projet 4 -->
+        <div class="slide">
+          <div class="slide-img-wrap">
+            <div class="slide-img" onclick="openLightbox('sso_powershell.png','Active Directory SSO')">
+              <img src="sso_powershell.png" alt="Active Directory PowerShell" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%22380%22%3E%3Crect fill=%22%230d1117%22 width=%22600%22 height=%22380%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22Arial%22 font-size=%2218%22 fill=%22%2310B981%22%3ESSO%20Active%20Directory%3C/text%3E%3C/svg%3E'">
+              <div class="slide-img-open">🔍 Agrandir</div>
+            </div>
+          </div>
+          <div class="slide-info">
+            <div class="proj-num">Projet 04 / 05</div>
+            <div class="proj-stage-badge">🏢 Stage 2ème année — Petits Frères des Pauvres</div>
+            <h3 class="slide-title">Participation à la mise en place d'un SSO</h3>
+            <div class="proj-objectif"><span class="proj-obj-label">Objectif :</span>Préparer l'Active Directory pour le déploiement d'un SSO — système permettant de se connecter une seule fois pour toutes les applications.</div>
+            <div class="proj-steps">
+              <div class="proj-step"><div class="step-num">1</div>Audit de l'Active Directory avec PowerShell.</div>
+              <div class="proj-step"><div class="step-num">2</div>Mise à jour des attributs manquants dans les comptes.</div>
+              <div class="proj-step"><div class="step-num">3</div>Création des groupes de sécurité par service.</div>
+              <div class="proj-step"><div class="step-num">4</div>Tests LDAP et accompagnement des utilisateurs.</div>
+            </div>
+            <div class="proj-resultat">✓ Active Directory nettoyé, synchronisation LDAP fonctionnelle</div>
+            <div class="chip-row"><span class="chip">Active Directory</span><span class="chip">PowerShell</span><span class="chip">LDAP</span><span class="chip">SSO</span><span class="chip">GLPI</span></div>
+            <div class="proj-dl-row">
+              <a href="Rapport_Stage_SSO_Nadine_Ibrahim.pdf" target="_blank" class="proj-dl-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Voir le rapport</a>
+              <button class="proj-dl-btn" onclick="openSynthese(4)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="9" x2="9" y2="21"/></svg>Compétences</button>
+            </div>
+          </div>
+        </div>
+        <!-- Projet 5 -->
+        <div class="slide">
+          <div class="slide-img-wrap">
+            <div class="slide-img" onclick="openLightbox('glpi.png','Interface GLPI')">
+              <img src="glpi.png" alt="GLPI Proxmox" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%22380%22%3E%3Crect fill=%22%230d1117%22 width=%22600%22 height=%22380%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22Arial%22 font-size=%2218%22 fill=%22%2310B981%22%3EGLPI%20sur%20Proxmox%3C/text%3E%3C/svg%3E'">
+              <div class="slide-img-open">🔍 Agrandir</div>
+            </div>
+          </div>
+          <div class="slide-info">
+            <div class="proj-num">Projet 05 / 05</div>
+            <h3 class="slide-title">Installation de GLPI sur VM Proxmox</h3>
+            <div class="proj-objectif"><span class="proj-obj-label">Objectif :</span>Installer GLPI sur une VM Debian 12 hébergée sur Proxmox — outil open source de gestion du parc informatique et de suivi des tickets.</div>
+            <div class="proj-steps">
+              <div class="proj-step"><div class="step-num">1</div>Création d'une VM Debian 12 sur Proxmox.</div>
+              <div class="proj-step"><div class="step-num">2</div>Installation de la stack LAMP (Apache, MariaDB, PHP).</div>
+              <div class="proj-step"><div class="step-num">3</div>Déploiement et configuration de GLPI.</div>
+              <div class="proj-step"><div class="step-num">4</div>Tests tickets et sécurisation de l'installation.</div>
+            </div>
+            <div class="proj-resultat">✓ GLPI opérationnel — 3 tickets créés, profils admin et technicien testés</div>
+            <div class="chip-row"><span class="chip">Proxmox VE</span><span class="chip">Debian 12</span><span class="chip">Apache</span><span class="chip">MariaDB</span><span class="chip">PHP 8.2</span><span class="chip">GLPI</span></div>
+            <div class="proj-dl-row">
+              <a href="Compte_rendu_GLPI_Nadine_Ibrahim.pdf" target="_blank" class="proj-dl-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Voir le compte-rendu</a>
+              <button class="proj-dl-btn" onclick="openSynthese(5)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="9" x2="9" y2="21"/></svg>Compétences</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slider-nav">
+        <button class="slider-btn" onclick="moveSlide(-1)" aria-label="Précédent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
+        <div class="dots" id="sliderDots"></div>
+        <button class="slider-btn" onclick="moveSlide(1)" aria-label="Suivant"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
+      </div>
+    </section>
+
+    <!-- ══ COMPÉTENCES ══ -->
+    <section id="competences" class="section">
+      <div class="section-label">Savoir-faire</div>
+      <h2 class="section-title reveal">Compétences</h2>
+      <div class="section-bar reveal"></div>
+      <div class="skills-grid reveal">
+        <div class="skill-cat glass card">
+          <div class="skill-cat-head"><div class="skill-cat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div><span class="skill-cat-label">Systèmes</span></div>
+          <div class="skill-tags"><span class="skill-tag skill-tag-main">Windows Server 2022</span><span class="skill-tag skill-tag-main">Active Directory</span><span class="skill-tag skill-tag-main">Linux (Ubuntu/Debian)</span><span class="skill-tag">PowerShell</span><span class="skill-tag">GPO</span><span class="skill-tag">Hyper-V</span><span class="skill-tag">Proxmox VE</span></div>
+        </div>
+        <div class="skill-cat glass card">
+          <div class="skill-cat-head"><div class="skill-cat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><span class="skill-cat-label">Cybersécurité</span></div>
+          <div class="skill-tags"><span class="skill-tag skill-tag-main">Pare-feu (pfSense)</span><span class="skill-tag skill-tag-main">Nmap / Nessus</span><span class="skill-tag skill-tag-main">Kali Linux</span><span class="skill-tag">SIEM (Wazuh)</span><span class="skill-tag">VPN (OpenVPN)</span><span class="skill-tag">MFA &amp; SSO</span><span class="skill-tag">Pentest basique</span></div>
+        </div>
+        <div class="skill-cat glass card">
+          <div class="skill-cat-head"><div class="skill-cat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div><span class="skill-cat-label">Réseaux</span></div>
+          <div class="skill-tags"><span class="skill-tag skill-tag-main">VLANs &amp; switching</span><span class="skill-tag skill-tag-main">Routage (OSPF, RIP)</span><span class="skill-tag skill-tag-main">TCP/IP</span><span class="skill-tag">Cisco (Packet Tracer)</span><span class="skill-tag">DNS / DHCP</span><span class="skill-tag">Wireshark</span></div>
+        </div>
+      </div>
+      <p class="par-label reveal" style="margin-bottom:1rem">Certifications</p>
+      <div class="certs-row reveal">
+        <div class="cert-card glass">
+          <div style="width:100%;border-radius:8px;overflow:hidden;border:1px solid var(--border);background:var(--bg3);height:100px;display:flex;align-items:center;justify-content:center;"><img src="ciscocyber.png" alt="Cisco" style="max-width:100%;max-height:100%;object-fit:contain;padding:10px"></div>
+          <div><div class="cert-name">Introduction to Cybersecurity</div><div class="cert-org">Cisco Networking Academy</div><div class="cert-footer-row"><span class="cert-badge">Obtenu</span></div></div>
+        </div>
+        <div class="cert-card glass" style="cursor:pointer" onclick="window.open('certificat_my_academy.pdf','_blank')">
+          <div style="width:100%;border-radius:8px;overflow:hidden;border:1px solid var(--border);background:#fff;height:100px;display:flex;align-items:center;justify-content:center;"><img src="certifmainlinblack.png" alt="MailInBlack" style="max-width:100%;max-height:100%;object-fit:contain;padding:10px"></div>
+          <div><div class="cert-name">Cybersécurité My Academy</div><div class="cert-org">MailInBlack — 13 modules</div><div class="cert-footer-row"><span class="cert-badge">Obtenu</span><span style="font-size:.72rem;color:var(--accent);margin-left:.5rem">Voir ↗</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ DOCUMENTS ══ -->
+    <section id="documents" class="section">
+      <div class="section-label">Ressources</div>
+      <h2 class="section-title reveal">Documents</h2>
+      <div class="section-bar reveal"></div>
+      <div class="docs-grid">
+        <div class="doc-card glass reveal">
+          <div class="doc-header"><div class="doc-badge">TS</div><div><div class="doc-title">Tableau de synthèse</div><div class="doc-sub">Récapitulatif des compétences et situations professionnelles — BTS SIO 2026</div></div></div>
+          <div class="doc-frame">
+            <object data="tableau de synthese.pdf" type="application/pdf" style="width:100%;height:100%;border:none;border-radius:10px">
+              <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.8rem;height:100%;padding:1.5rem;text-align:center">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.4"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                <p style="font-size:.85rem;font-weight:600;color:var(--text)">Tableau de synthèse BTS SIO</p>
+                <p style="font-size:.75rem;color:var(--text3)">IBRAHIM Nadine — N° 02541477344</p>
+                <a href="tableau de synthese.pdf" target="_blank" class="btn-primary" style="font-size:.8rem;padding:.55rem 1.2rem">Ouvrir ↗</a>
+              </div>
+            </object>
+          </div>
+          <div class="doc-footer">
+            <a href="tableau de synthese.pdf" download class="btn-primary" style="font-size:.8rem;padding:.55rem 1.1rem"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Télécharger</a>
+            <a href="tableau de synthese.pdf" target="_blank" class="btn-outline" style="font-size:.8rem;padding:.55rem 1.1rem">Ouvrir ↗</a>
+          </div>
+        </div>
+        <div class="doc-card glass reveal delay-2">
+          <div class="doc-header"><div class="doc-badge">CV</div><div><div class="doc-title">Curriculum Vitae</div><div class="doc-sub">Mon parcours, compétences et expériences professionnelles</div></div></div>
+          <div class="doc-frame"><iframe src="Ibrahim_Nadine_cv.pdf" title="Curriculum Vitae"></iframe></div>
+          <div class="doc-footer">
+            <a href="Ibrahim_Nadine_cv.pdf" download class="btn-primary" style="font-size:.8rem;padding:.55rem 1.1rem"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Télécharger</a>
+            <a href="Ibrahim_Nadine_cv.pdf" target="_blank" class="btn-outline" style="font-size:.8rem;padding:.55rem 1.1rem">Ouvrir ↗</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ VEILLE ══ -->
+    <section id="veille" class="section">
+      <div class="section-label">Intelligence</div>
+      <h2 class="section-title reveal">Veille technologique</h2>
+      <div class="section-bar reveal"></div>
+      <p class="section-sub reveal">Je maintiens une veille technologique active centrée sur la cybersécurité, l'administration réseau et les nouvelles technologies IT — actualisée en temps réel via The Hacker News.</p>
+      <p class="vsource-cat-label reveal">📰 IT &amp; Cybersécurité</p>
+      <div class="veille-sources-grid reveal" style="margin-bottom:1.8rem">
+        <div class="vsource-card glass"><div class="vsource-head"><div class="vsource-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8" width="16" height="16"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/></svg></div><div><div class="vsource-name">IT-Connect</div><div class="vsource-type">Blog IT français</div></div></div><p class="vsource-desc">Tutoriels, actualités et guides pratiques en français sur Windows Server, Active Directory, réseaux et cybersécurité.</p><a href="https://www.it-connect.fr" target="_blank" rel="noopener" class="vsource-link">Visiter ↗</a></div>
+        <div class="vsource-card glass"><div class="vsource-head"><div class="vsource-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8" width="16" height="16"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><div class="vsource-name">ANSSI</div><div class="vsource-type">Agence nationale</div></div></div><p class="vsource-desc">Publications officielles, alertes de sécurité et recommandations de l'Agence Nationale de la Sécurité des Systèmes d'Information.</p><a href="https://www.ssi.gouv.fr" target="_blank" rel="noopener" class="vsource-link">Visiter ↗</a></div>
+        <div class="vsource-card glass"><div class="vsource-head"><div class="vsource-icon"><img src="https://cdn.simpleicons.org/hackernews/10B981" alt="THN" width="16" height="16" loading="lazy"></div><div><div class="vsource-name">The Hacker News</div><div class="vsource-type">Cybersécurité</div></div></div><p class="vsource-desc">Actualités quotidiennes sur les menaces, vulnérabilités et incidents de sécurité à l'échelle mondiale.</p><a href="https://thehackernews.com" target="_blank" rel="noopener" class="vsource-link">Visiter ↗</a></div>
+      </div>
+      <p class="vsource-cat-label reveal">📱 Réseaux sociaux</p>
+      <div class="veille-sources-grid reveal" style="margin-bottom:1.8rem">
+        <div class="vsource-card glass"><div class="vsource-head"><div class="vsource-icon"><img src="https://cdn.simpleicons.org/linkedin/10B981" alt="LinkedIn" width="16" height="16" loading="lazy"></div><div><div class="vsource-name">LinkedIn</div><div class="vsource-type">Réseau professionnel</div></div></div><p class="vsource-desc">Suivi des professionnels de la cybersécurité et experts IT pour une veille métier quotidienne.</p><a href="https://linkedin.com" target="_blank" rel="noopener" class="vsource-link">Visiter ↗</a></div>
+        <div class="vsource-card glass"><div class="vsource-head"><div class="vsource-icon"><img src="https://cdn.simpleicons.org/youtube/10B981" alt="YouTube" width="16" height="16" loading="lazy"></div><div><div class="vsource-name">YouTube</div><div class="vsource-type">Tutoriels vidéo</div></div></div><p class="vsource-desc">Chaînes spécialisées en cybersécurité et réseaux (NetworkChuck, John Hammond, Cocadmin).</p><a href="https://youtube.com" target="_blank" rel="noopener" class="vsource-link">Visiter ↗</a></div>
+        <div class="vsource-card glass"><div class="vsource-head"><div class="vsource-icon"><img src="https://cdn.simpleicons.org/x/10B981" alt="X" width="16" height="16" loading="lazy"></div><div><div class="vsource-name">X (Twitter)</div><div class="vsource-type">Actualité temps réel</div></div></div><p class="vsource-desc">Fil d'actualité des chercheurs en sécurité et CERT pour détecter les nouvelles CVE en temps réel.</p><a href="https://x.com" target="_blank" rel="noopener" class="vsource-link">Visiter ↗</a></div>
+        <div class="vsource-card glass"><div class="vsource-head"><div class="vsource-icon"><img src="https://cdn.simpleicons.org/reddit/10B981" alt="Reddit" width="16" height="16" loading="lazy"></div><div><div class="vsource-name">Reddit — r/netsec</div><div class="vsource-type">Communauté</div></div></div><p class="vsource-desc">Communauté dédiée à la sécurité réseau, avec partage de writeups, outils et techniques.</p><a href="https://reddit.com/r/netsec" target="_blank" rel="noopener" class="vsource-link">Visiter ↗</a></div>
+      </div>
+      <p class="vsource-cat-label reveal">🤖 Intelligence Artificielle</p>
+      <div class="veille-sources-grid reveal" style="margin-bottom:2.5rem">
+        <div class="vsource-card glass"><div class="vsource-head"><div class="vsource-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8" width="16" height="16"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2z"/><path d="M12 8v4l3 3"/></svg></div><div><div class="vsource-name">ChatGPT</div><div class="vsource-type">IA générative</div></div></div><p class="vsource-desc">Assistance pour approfondir des concepts techniques, générer des scripts et explorer de nouvelles notions en cybersécurité.</p></div>
+        <div class="vsource-card glass"><div class="vsource-head"><div class="vsource-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8" width="16" height="16"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div><div><div class="vsource-name">Perplexity AI</div><div class="vsource-type">Recherche IA</div></div></div><p class="vsource-desc">Moteur de recherche augmenté par l'IA pour des réponses sourcées sur les actualités IT.</p></div>
+        <div class="vsource-card glass"><div class="vsource-head"><div class="vsource-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8" width="16" height="16"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><div><div class="vsource-name">Mistral AI</div><div class="vsource-type">IA française</div></div></div><p class="vsource-desc">IA open source française, utile pour comprendre les enjeux de souveraineté numérique.</p></div>
+        <div class="vsource-card glass"><div class="vsource-head"><div class="vsource-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8" width="16" height="16"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 12h6M12 9v6"/></svg></div><div><div class="vsource-name">Google Gemini</div><div class="vsource-type">IA multimodale</div></div></div><p class="vsource-desc">IA de Google pour analyser des documents et effectuer une veille sur les tendances technologiques.</p></div>
+      </div>
+      <div class="thn-header reveal">
+        <div class="thn-source-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span>The Hacker News</span><span class="thn-live-dot"></span><span class="thn-live-txt">Live</span></div>
+        <button class="thn-refresh" id="thnRefresh"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>Rafraîchir</button>
+      </div>
+      <div class="thn-grid reveal" id="thnGrid">
+        <div class="thn-card thn-skeleton"></div><div class="thn-card thn-skeleton"></div><div class="thn-card thn-skeleton"></div>
+        <div class="thn-card thn-skeleton"></div><div class="thn-card thn-skeleton"></div><div class="thn-card thn-skeleton"></div>
+      </div>
+      <div class="thn-error" id="thnError" style="display:none"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><p>Impossible de charger. <button onclick="loadTHN()">Réessayer</button></p></div>
+    </section>
+
+    <!-- ══ CONTACT ══ -->
+    <section id="contact" class="section">
+      <div class="section-label">Échangeons</div>
+      <h2 class="section-title reveal">Contact</h2>
+      <div class="section-bar reveal"></div>
+      <p class="section-sub reveal">Une question, une opportunité de stage ou d'alternance ? N'hésitez pas à me contacter.</p>
+      <div class="contact-grid">
+        <div class="reveal">
+          <p class="contact-tagline">Travaillons<br><span style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">ensemble.</span></p>
+          <div class="contact-list">
+            <div class="contact-item glass"><div class="contact-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><div class="contact-label">Email</div><a href="mailto:n.ibrahim@ecole-ipssi.net">n.ibrahim@ecole-ipssi.net</a></div></div>
+            <div class="contact-item glass"><div class="contact-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div><div><div class="contact-label">LinkedIn</div><a href="https://linkedin.com/in/nadineibrahim" target="_blank" rel="noopener">linkedin.com/in/nadineibrahim</a></div></div>
+            <div class="contact-item glass"><div class="contact-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><div class="contact-label">Localisation</div><span style="color:var(--text);font-size:.875rem">Île-de-France</span></div></div>
+          </div>
+        </div>
+        <div class="reveal delay-2">
+          <div class="contact-form-card glass">
+            <form class="contact-form" id="contactForm" onsubmit="handleContactForm(event)" novalidate>
+              <div class="cf-row">
+                <div class="cf-field"><label class="cf-label" for="cf-name">Nom complet</label><input class="cf-input" type="text" id="cf-name" placeholder="Jean Dupont" autocomplete="name"><div class="cf-error" id="err-name"></div></div>
+                <div class="cf-field"><label class="cf-label" for="cf-email">Email</label><input class="cf-input" type="email" id="cf-email" placeholder="jean@exemple.com" autocomplete="email"><div class="cf-error" id="err-email"></div></div>
+              </div>
+              <div class="cf-field"><label class="cf-label" for="cf-subject">Sujet</label><input class="cf-input" type="text" id="cf-subject" placeholder="Proposition de stage / alternance…"><div class="cf-error" id="err-subject"></div></div>
+              <div class="cf-field"><label class="cf-label" for="cf-msg">Message</label><textarea class="cf-input cf-textarea" id="cf-msg" placeholder="Votre message…"></textarea><div class="cf-error" id="err-msg"></div></div>
+              <button type="submit" class="btn-primary cf-submit">Envoyer le message <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+            </form>
+            <div class="cf-success" id="cf-success">
+              <svg viewBox="0 0 52 52" fill="none" style="width:52px;height:52px;margin:0 auto 1rem"><circle class="cf-check-circle" cx="26" cy="26" r="25" stroke="var(--accent)" stroke-width="2"/><path class="cf-check-tick" d="M14 26l8 8 16-16" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <div class="cf-success-title">Message envoyé !</div>
+              <p class="cf-success-msg">Merci pour votre message. Je vous répondrai dans les plus brefs délais.</p>
+              <button class="btn-outline" onclick="resetForm()" style="margin:0 auto">Envoyer un autre message</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer><span>© 2026 Nadine Ibrahim — Portfolio BTS SIO SISR</span></footer>
+  </main>
+</div>
+
+<button id="scrollTop" aria-label="Haut"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg></button>
+
+<script>
+/* ══ PLEXUS ══ */
+(function(){
+  var c=document.getElementById('plexus-canvas');if(!c)return;
+  var ctx=c.getContext('2d'),W,H,pts;
+  function init(){
+    W=c.width=window.innerWidth;H=c.height=window.innerHeight;pts=[];
+    for(var i=0;i<65;i++) pts.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4,r:Math.random()*1.5+.5});
+  }
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    pts.forEach(function(p){p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;});
+    for(var i=0;i<pts.length;i++) for(var j=i+1;j<pts.length;j++){
+      var dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);
+      if(d<140){ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle='rgba(16,185,129,'+(1-d/140)*.3+')';ctx.lineWidth=.7;ctx.stroke();}
+    }
+    pts.forEach(function(p){ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle='rgba(52,211,153,.7)';ctx.fill();});
+  }
+  init();window.addEventListener('resize',init);setInterval(draw,30);
+})();
+
+/* ══ SLIDER ══ */
+var _slider={slides:[],dots:[],current:0,
+  init:function(){
+    this.slides=Array.from(document.querySelectorAll('.slide'));
+    this.slides.forEach(function(s,i){s.style.display=i===0?'':'none';if(i===0)s.classList.add('active');else s.classList.remove('active');});
+    var w=document.getElementById('sliderDots');
+    if(w&&w.children.length===0){
+      this.slides.forEach(function(s,i){var d=document.createElement('button');d.className='dot'+(i===0?' active':'');d.setAttribute('aria-label','Projet '+(i+1));(function(idx){d.addEventListener('click',function(){_slider.goTo(idx);});})(i);w.appendChild(d);});
+      this.dots=Array.from(w.querySelectorAll('.dot'));
+    }
+    if(this.dots[0])this.dots[0].classList.add('active');
+  },
+  goTo:function(idx){
+    if(!this.slides.length)return;
+    var p=this.current;this.current=((idx%this.slides.length)+this.slides.length)%this.slides.length;
+    this.slides[p].classList.remove('active');this.slides[p].style.display='none';if(this.dots[p])this.dots[p].classList.remove('active');
+    this.slides[this.current].classList.add('active');this.slides[this.current].style.display='';if(this.dots[this.current])this.dots[this.current].classList.add('active');
+  }
+};
+window.moveSlide=function(d){_slider.goTo(_slider.current+d);};
+
+/* ══ DÉBOUCHÉS ══ */
+window.toggleDeboucles=function(btn,id){
+  var p=document.getElementById('deb-'+id);if(!p)return;
+  var o=p.classList.toggle('open');
+  btn.innerHTML=(o?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>':'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>')+' Débouchés';
+};
+
+/* ══ LIGHTBOX ══ */
+window.openLightbox=function(src,cap){var l=document.getElementById('lightbox'),i=document.getElementById('lightbox-img'),c=document.getElementById('lightbox-caption');if(!l||!i)return;i.src=src;if(c)c.textContent=cap||'';l.classList.add('open');document.body.style.overflow='hidden';};
+window.closeLightbox=function(){var l=document.getElementById('lightbox');if(!l)return;l.classList.remove('open');document.body.style.overflow='';};
+
+/* ══ SYNTHÈSE ══ */
+var _PL={1:'Projet 01 · Infrastructure Réseau VLAN',2:"Projet 02 · Cybersécurité — SysDream",3:'Projet 03 · Intranet HTTPS',4:"Projet 04 · SSO — Petits Frères des Pauvres",5:'Projet 05 · GLPI sur Proxmox'};
+window.openSynthese=function(n){
+  var m=document.getElementById('syntheseModal'),l=document.getElementById('synth-proj-label');if(!m)return;
+  if(n&&_PL[n])l.textContent='🔍 '+_PL[n];else l.textContent='BTS SIO SISR · Session 2026 · Nadine Ibrahim';
+  m.querySelectorAll('tr.synth-row').forEach(function(r){var p=(r.getAttribute('data-proj')||'').split(' ');if(!n){r.classList.remove('synth-row-highlight','synth-row-dim');}else if(p.indexOf(String(n))!==-1){r.classList.add('synth-row-highlight');r.classList.remove('synth-row-dim');}else{r.classList.add('synth-row-dim');r.classList.remove('synth-row-highlight');}});
+  m.classList.add('open');document.body.style.overflow='hidden';
+};
+window.closeSynthese=function(){var m=document.getElementById('syntheseModal');if(!m)return;m.classList.remove('open');document.body.style.overflow='';};
+
+/* ══ FORM ══ */
+window.resetForm=function(){var f=document.getElementById('contactForm'),s=document.getElementById('cf-success');if(f){f.reset();f.style.display='';}if(s)s.classList.remove('show');};
+window.handleContactForm=function(e){
+  e.preventDefault();
+  var n=(document.getElementById('cf-name')||{}).value||'',em=(document.getElementById('cf-email')||{}).value||'',s=(document.getElementById('cf-subject')||{}).value||'',m=(document.getElementById('cf-msg')||{}).value||'',ok=true;
+  function mk(id,b){var el=document.getElementById(id);if(el)el.style.borderColor=b?'rgba(248,113,113,.65)':'';}
+  function er(id,t){var el=document.getElementById(id);if(el)el.textContent=t;}
+  ['cf-name','cf-email','cf-subject','cf-msg'].forEach(function(id){mk(id,false);});
+  ['err-name','err-email','err-subject','err-msg'].forEach(function(id){er(id,'');});
+  if(!n.trim()){mk('cf-name',true);er('err-name','Requis');ok=false;}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em.trim())){mk('cf-email',true);er('err-email','Email invalide');ok=false;}
+  if(!s.trim()){mk('cf-subject',true);er('err-subject','Requis');ok=false;}
+  if(m.trim().length<10){mk('cf-msg',true);er('err-msg','Trop court');ok=false;}
+  if(!ok)return;
+  var f=document.getElementById('contactForm'),sc=document.getElementById('cf-success');
+  if(f)f.style.display='none';if(sc)sc.classList.add('show');
+};
+
+document.addEventListener('DOMContentLoaded',function(){
+  /* LOADER */
+  (function(){
+    var l=document.getElementById('loader'),b=document.getElementById('loaderBar'),s=document.getElementById('loaderStatus');if(!l)return;
+    var steps=[[15,'Initialisation...'],[35,'Chargement...'],[60,'Configuration...'],[82,'Sécurisation...'],[100,'Prêt.']],i=0;
+    function next(){if(i>=steps.length){setTimeout(function(){l.style.transition='opacity .5s';l.style.opacity='0';l.style.pointerEvents='none';setTimeout(function(){l.remove();},520);},200);return;}if(b)b.style.width=steps[i][0]+'%';if(s)s.textContent=steps[i][1];i++;setTimeout(next,260);}
+    next();
+  })();
+
+  _slider.init();
+
+  /* KEYBOARD */
+  document.addEventListener('keydown',function(e){if(e.key==='ArrowLeft')_slider.goTo(_slider.current-1);if(e.key==='ArrowRight')_slider.goTo(_slider.current+1);if(e.key==='Escape'){window.closeLightbox();window.closeSynthese();}});
+
+  /* LIGHTBOX */
+  var lc=document.getElementById('lightbox-close');if(lc)lc.addEventListener('click',window.closeLightbox);
+  var lb=document.getElementById('lightbox');if(lb)lb.addEventListener('click',function(e){if(e.target===lb)window.closeLightbox();});
+  var sm=document.getElementById('syntheseModal');if(sm)sm.addEventListener('click',function(e){if(e.target===sm)window.closeSynthese();});
+
+  /* BURGER */
+  var bg=document.getElementById('burger'),sb=document.getElementById('sidebar');
+  if(bg&&sb){bg.addEventListener('click',function(){sb.classList.toggle('open');});document.querySelectorAll('.nav-link').forEach(function(a){a.addEventListener('click',function(){sb.classList.remove('open');});});}
+
+  /* SCROLL PROGRESS */
+  var sp=document.getElementById('scroll-progress');
+  if(sp){function upd(){var d=document.documentElement,t=d.scrollHeight-d.clientHeight;sp.style.width=(t>0?(window.scrollY/t)*100:0)+'%';}upd();window.addEventListener('scroll',upd,{passive:true});window.addEventListener('resize',upd);}
+
+  /* SCROLL TOP */
+  var st=document.getElementById('scrollTop');
+  if(st){window.addEventListener('scroll',function(){st.classList.toggle('show',window.scrollY>400);},{passive:true});st.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});}
+
+  /* CURSOR */
+  (function(){
+    var o=document.getElementById('cursor-outer'),inn=document.getElementById('cursor-inner');
+    if(!o||!inn||window.matchMedia('(pointer:coarse)').matches)return;
+    var x=innerWidth/2,y=innerHeight/2,ox=x,oy=y;
+    window.addEventListener('mousemove',function(e){x=e.clientX;y=e.clientY;inn.style.left=x+'px';inn.style.top=y+'px';});
+    (function f(){ox+=(x-ox)*.16;oy+=(y-oy)*.16;o.style.left=ox+'px';o.style.top=oy+'px';requestAnimationFrame(f);})();
+  })();
+
+  /* REVEAL */
+  (function(){
+    var els=document.querySelectorAll('.reveal');if(!els.length)return;
+    if(!('IntersectionObserver' in window)){els.forEach(function(el){el.classList.add('visible');});return;}
+    var io=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});},{threshold:.08});
+    els.forEach(function(el){io.observe(el);});
+  })();
+
+  /* ACTIVE NAV */
+  (function(){
+    var links=Array.from(document.querySelectorAll('.nav-link'));
+    var sections=links.map(function(a){var id=(a.getAttribute('href')||'').replace('#','');return id?document.getElementById(id):null;}).filter(Boolean);
+    function setActive(){var pos=window.scrollY+window.innerHeight*.35,cur=sections.length?sections[0].id:'';sections.forEach(function(s){if(pos>=s.offsetTop)cur=s.id;});links.forEach(function(a){var href=(a.getAttribute('href')||'').replace('#','');a.classList.toggle('active',href===cur);});}
+    setActive();window.addEventListener('scroll',setActive,{passive:true});
+  })();
+
+  /* SWIPE */
+  var sw=document.querySelector('.slider-wrap'),sx=0;
+  if(sw){sw.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;},{passive:true});sw.addEventListener('touchend',function(e){var d=sx-e.changedTouches[0].clientX;if(Math.abs(d)>45)_slider.goTo(d>0?_slider.current+1:_slider.current-1);},{passive:true});}
+
+  /* THN */
+  window.loadTHN();
+  var tr=document.getElementById('thnRefresh');if(tr)tr.addEventListener('click',window.loadTHN);
+});
+
+/* ══ THE HACKER NEWS ══ */
+(function(){
+  var PROXY='https://api.allorigins.win/get?url=',FEED='https://feeds.feedburner.com/TheHackersNews',MAX=6;
+  function fmt(s){try{var d=new Date(s);return d.toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'});}catch(e){return s;}}
+  function strip(h){var t=document.createElement('div');t.innerHTML=h;return(t.textContent||t.innerText||'').trim().replace(/\s+/g,' ');}
+  function tag(t){var l=t.toLowerCase();if(/malware|ransomware|trojan|rat|backdoor/.test(l))return{label:'Malware',cls:'thn-tag-red'};if(/vuln|cve|patch|exploit|zero.day/.test(l))return{label:'Vulnérabilité',cls:'thn-tag-orange'};if(/phishing|fraud|scam/.test(l))return{label:'Phishing',cls:'thn-tag-yellow'};if(/breach|leak|stolen/.test(l))return{label:'Fuite',cls:'thn-tag-red'};if(/update|patch/.test(l))return{label:'Mise à jour',cls:'thn-tag-blue'};return{label:'Actualité',cls:'thn-tag-green'};}
+  window.loadTHN=function(){
+    var g=document.getElementById('thnGrid'),e=document.getElementById('thnError');if(!g)return;
+    g.innerHTML='';if(e)e.style.display='none';
+    for(var i=0;i<6;i++){var sk=document.createElement('div');sk.className='thn-card thn-skeleton';g.appendChild(sk);}
+    fetch(PROXY+encodeURIComponent(FEED))
+      .then(function(r){return r.json();})
+      .then(function(d){
+        var xml=new DOMParser().parseFromString(d.contents,'text/xml');
+        var items=Array.from(xml.querySelectorAll('item')).slice(0,MAX);
+        g.innerHTML='';
+        items.forEach(function(item){
+          var title=(item.querySelector('title')||{}).textContent||'',link=(item.querySelector('link')||{}).textContent||'',date=(item.querySelector('pubDate')||{}).textContent||'',desc=strip((item.querySelector('description')||{}).textContent||'').slice(0,110)+'…';
+          var tg=tag(title),card=document.createElement('div');card.className='thn-card glass';
+          card.innerHTML='<span class="thn-tag '+tg.cls+'">'+tg.label+'</span><a href="'+link+'" target="_blank" rel="noopener" class="thn-card-title">'+title+'</a><p class="thn-card-desc">'+desc+'</p><div class="thn-card-date">'+fmt(date)+'</div>';
+          g.appendChild(card);
+        });
+        if(!items.length&&e)e.style.display='block';
+      })
+      .catch(function(){if(g)g.innerHTML='';if(e)e.style.display='block';});
+  };
+})();
+</script>
+</body>
+</html>
