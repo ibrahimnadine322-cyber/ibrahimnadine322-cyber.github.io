@@ -595,7 +595,7 @@ footer{padding:1.5rem 5rem;border-top:1px solid var(--border);color:var(--text3)
                 <tr class="synth-row" data-proj="5"><td>Installation et configuration d'un outil d'inventaire et ticketing (GLPI)</td><td>21/10/2024 → 04/04/2026</td><td></td><td><span class="synth-check c2">✓</span></td><td></td><td></td><td></td><td></td></tr>
                 <tr class="synth-row" data-proj="4"><td>Gestion des utilisateurs dans l'Active Directory</td><td>21/10/2024 → 04/04/2026</td><td><span class="synth-check c1">✓</span></td><td><span class="synth-check c2">✓</span></td><td></td><td></td><td></td><td><span class="synth-check c6">✓</span></td></tr>
                 <tr class="synth-row" data-proj="1"><td>Mise en place de VLAN</td><td>21/10/2024 → 04/04/2026</td><td><span class="synth-check c1">✓</span></td><td></td><td></td><td></td><td></td><td></td></tr>
-                <tr class="synth-row" data-proj="1 3"><td>Mise en place d'une infrastructure réseau</td><td>21/10/2024 → 04/04/2026</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr class="synth-row" data-proj="1 3"><td>Mise en place d'une infrastructure réseau</td><td>21/10/2024 → 04/04/2026</td><td></td><td></td><td></td><td></td><td><span class="synth-check c5">✓</span></td><td></td></tr>
                 <tr class="synth-row" data-proj="1"><td>Cas GSB : AP1 Proposition Commercial GSB</td><td>21/10/2024 → 04/04/2026</td><td></td><td><span class="synth-check c2">✓</span></td><td></td><td><span class="synth-check c4">✓</span></td><td><span class="synth-check c5">✓</span></td><td><span class="synth-check c6">✓</span></td></tr>
                 <tr class="synth-row" data-proj="1"><td>Cas GSB : AP2 Plan d'infrastructure réseau</td><td>21/10/2024 → 04/04/2026</td><td></td><td><span class="synth-check c2">✓</span></td><td></td><td><span class="synth-check c4">✓</span></td><td><span class="synth-check c5">✓</span></td><td></td></tr>
                 <tr class="synth-section-row"><td colspan="8">🏢 Stage 1ère année — SysDream (28/04/2025 → 25/06/2025)</td></tr>
@@ -714,10 +714,10 @@ footer{padding:1.5rem 5rem;border-top:1px solid var(--border);color:var(--text3)
             <h3 class="slide-title">Participation à la mise en place d'un SSO</h3>
             <div class="proj-objectif"><span class="proj-obj-label">Objectif :</span>Comment préparer un Active Directory pour la mise en place d'un SSO ?</div>
             <div class="proj-steps">
-              <div class="proj-step"><div class="step-num">1</div>J'ai préparé l'Active Directory pour la mise en place du SSO. Le SSO permet une connexion unique pour plusieurs applications — avant, les utilisateurs géraient plusieurs identifiants, ce qui créait beaucoup de demandes au support.</div>
-              <div class="proj-step"><div class="step-num">2</div>Sur cette capture, on voit PowerShell utilisé pour auditer l'Active Directory : repérage des comptes désactivés, inactifs et doublons, et complétion des attributs manquants comme l'adresse mail ou le département.</div>
-              <div class="proj-step"><div class="step-num">3</div>Création des groupes de sécurité pour organiser les utilisateurs par service, puis tests de synchronisation LDAP pour vérifier que tout fonctionne.</div>
-              <div class="proj-step"><div class="step-num">4</div>Accompagnement des utilisateurs au moment du déploiement, car le changement demandait un temps d'adaptation.</div>
+              <div class="proj-step"><div class="step-num">1</div>J'ai participé à la mise en place d'un SSO — c'est à dire une authentification unique pour toutes les applications.</div>
+              <div class="proj-step"><div class="step-num">2</div>Mon rôle était de préparer l'Active Directory.</div>
+              <div class="proj-step"><div class="step-num">3</div>J'ai utilisé des commandes pour nettoyer l'AD, supprimer les comptes en doublon, désactiver les comptes inactifs et compléter les attributs manquants comme l'email.</div>
+              <div class="proj-step"><div class="step-num">4</div>Sans ce nettoyage la synchronisation LDAP ne pouvait pas fonctionner. J'ai aussi accompagné les utilisateurs au moment du déploiement.</div>
             </div>
             <div class="proj-resultat">✓ Active Directory nettoyé, synchronisation LDAP fonctionnelle</div>
             <div class="chip-row"><span class="chip">Active Directory</span><span class="chip">PowerShell</span><span class="chip">LDAP</span><span class="chip">SSO</span><span class="chip">GLPI</span></div>
@@ -740,10 +740,9 @@ footer{padding:1.5rem 5rem;border-top:1px solid var(--border);color:var(--text3)
             <h3 class="slide-title">Installation de GLPI sur VM Proxmox</h3>
             <div class="proj-objectif"><span class="proj-obj-label">Objectif :</span>Comment installer et configurer un outil de gestion de parc informatique et de ticketing sous Linux ?</div>
             <div class="proj-steps">
-              <div class="proj-step"><div class="step-num">1</div>Création d'une machine virtuelle Debian 12 sur Proxmox, puis installation de la stack LAMP. C'est Linux, Apache, MariaDB et PHP — les quatre éléments nécessaires pour faire tourner GLPI.</div>
-              <div class="proj-step"><div class="step-num">2</div>Ensuite, déploiement de GLPI dans le dossier web d'Apache et configuration de la base de données.</div>
-              <div class="proj-step"><div class="step-num">3</div>Une fois installé, on sécurise en supprimant le fichier d'installation et on vérifie que les permissions sont correctes.</div>
-              <div class="proj-step"><div class="step-num">4</div>Sur cette capture, on voit l'interface de ticketing avec 3 tickets créés pour tester l'outil, ce qui confirme que GLPI fonctionne correctement.</div>
+              <div class="proj-step"><div class="step-num">1</div>J'ai installé GLPI sur une machine virtuelle Debian 12 sur Proxmox — c'est à dire un outil de gestion de parc informatique et de ticketing.</div>
+              <div class="proj-step"><div class="step-num">2</div>Ensuite j'ai installé la stack LAMP — c'est Linux, Apache, MariaDB et PHP — les éléments nécessaires pour faire tourner GLPI.</div>
+              <div class="proj-step"><div class="step-num">3</div>Vous pouvez voir sur cette capture l'interface de ticketing avec 3 tickets créés pour tester que tout fonctionne correctement.</div>
             </div>
             <div class="proj-resultat">✓ GLPI opérationnel — 3 tickets créés, profils admin et technicien testés</div>
             <div class="chip-row"><span class="chip">Proxmox VE</span><span class="chip">Debian 12</span><span class="chip">Apache</span><span class="chip">MariaDB</span><span class="chip">PHP 8.2</span><span class="chip">GLPI</span></div>
